@@ -1,0 +1,6 @@
+onlyBuiltDependencies:
+  - '@scarf/scarf'
+  - msgpackr-extract
+  - protobufjs
+  - sqlite3
+  - ssh2
