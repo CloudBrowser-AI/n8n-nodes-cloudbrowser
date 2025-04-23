@@ -2,7 +2,7 @@
   "nodes": [
     {
       "parameters": {},
-      "id": "123",
+      "id": "12345678-1234-1234-1234-123456789012",
       "name": "Start",
       "type": "n8n-nodes-base.start",
       "typeVersion": 1,
@@ -13,7 +13,8 @@
     },
     {
       "parameters": {
-        "operation": "getPdf",
+        "resource": "content",
+        "operation": "getScreenshot",
         "url": "https://n8n.io",
         "navigationOptions": {
           "waitUntil": "networkidle0",
@@ -23,24 +24,17 @@
           "headless": true,
           "stealth": true
         },
-        "pdfOptions": {
-          "format": "A4",
-          "landscape": true,
-          "printBackground": true,
-          "margin": {
-            "top": 10,
-            "right": 10,
-            "bottom": 10,
-            "left": 10
-          }
+        "screenshotOptions": {
+          "fullPage": true,
+          "type": "png"
         }
       },
-      "id": "124",
+      "id": "12345678-1234-1234-1234-123456789013",
       "name": "CloudBrowser",
       "type": "n8n-nodes-cloudbrowser.cloudBrowser",
       "typeVersion": 1,
       "position": [
-        450,
+        500,
         300
       ],
       "credentials": {
@@ -52,16 +46,16 @@
     },
     {
       "parameters": {
-        "operation": "writeBinaryFile",
-        "fileName": "={{$json[\"filename\"]}}",
+        "binaryPropertyName": "screenshotBinary",
+        "fileName": "=screenshot.{{$json.fileExtension}}",
         "options": {}
       },
-      "id": "125",
+      "id": "12345678-1234-1234-1234-123456789014",
       "name": "Write Binary File",
-      "type": "n8n-nodes-base.filesWrite",
-      "typeVersion": 2,
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "typeVersion": 1,
       "position": [
-        700,
+        750,
         300
       ]
     }

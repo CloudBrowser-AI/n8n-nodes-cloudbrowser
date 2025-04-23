@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-cloudbrowser",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CloudBrowser node for n8n that allows users to interact with websites using Puppeteer - retrieve HTML, take screenshots, and generate PDFs",
   "keywords": [
     "n8n-community-node-package",
@@ -12,14 +12,14 @@
     "html"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/yourusername/n8n-nodes-cloudbrowser",
+  "homepage": "https://github.com/CloudBrowser-AI/cloudbrowser-ai-front",
   "author": {
-    "name": "Your Name",
-    "email": "your.email@example.com"
+    "name": "Contact",
+    "email": "contact@cloudbrowser.ai"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/n8n-nodes-cloudbrowser.git"
+    "url": "https://github.com/CloudBrowser-AI/cloudbrowser-ai-front.git"
   },
   "engines": {
     "node": ">=18.10",
@@ -42,13 +42,12 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
+      "dist/credentials/CloudBrowserApi.credentials.js",
       "dist/credentials/HttpBinApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js",
-      "dist/nodes/CloudBrowser/CloudBrowser.node.js"
+      "dist/nodes/CloudBrowser/CloudBrowser.node.js",
+      "dist/nodes/HttpBin/HttpBin.node.js"
     ]
   },
   "devDependencies": {

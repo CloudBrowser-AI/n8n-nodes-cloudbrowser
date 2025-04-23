@@ -2,106 +2,106 @@
 
 # n8n-nodes-cloudbrowser
 
-This is a node for [n8n](https://n8n.io/) that allows users to interact with websites using a cloud-based browser instance powered by Puppeteer. It provides several operations to navigate to websites and retrieve different types of content.
+Este es un nodo para [n8n](https://n8n.io/) que permite a los usuarios interactuar con sitios web utilizando una instancia de navegador basada en la nube impulsada por Puppeteer. Proporciona varias operaciones para navegar por sitios web y recuperar diferentes tipos de contenido.
 
-## Installation
+## Instalación
 
-Follow these steps to install this node:
+Sigue estos pasos para instalar este nodo:
 
 ```bash
-# Install via npm
+# Instalar vía npm
 npm install n8n-nodes-cloudbrowser
 
-# Or directly from n8n
+# O directamente desde n8n
 n8n community-nodes add n8n-nodes-cloudbrowser
 ```
 
-## Features
+## Características
 
-The CloudBrowser node offers the following operations:
+El nodo CloudBrowser ofrece las siguientes operaciones:
 
-### 1. Get HTML from Website
+### 1. Obtener HTML del sitio web
 
-This operation allows you to navigate to a specified URL and retrieve the HTML content of the page.
+Esta operación permite navegar a una URL específica y recuperar el contenido HTML de la página.
 
-**Output:**
-- Page title
-- Final URL (after any redirects)
-- Full HTML content
+**Salida:**
+- Título de la página
+- URL final (después de cualquier redirección)
+- Contenido HTML completo
 
-### 2. Get Screenshot from Website
+### 2. Obtener captura de pantalla del sitio web
 
-This operation allows you to navigate to a specified URL and capture a screenshot of the page.
+Esta operación permite navegar a una URL específica y capturar una imagen de la página.
 
-**Options:**
-- Full page or viewport only
-- Image quality (for JPEG)
-- Image format (JPEG or PNG)
-- Clip area (coordinates and dimensions)
+**Opciones:**
+- Página completa o solo la vista
+- Calidad de imagen (para JPEG)
+- Formato de imagen (JPEG o PNG)
+- Área de recorte (coordenadas y dimensiones)
 
-**Output:**
-- Screenshot as base64
-- Binary data
-- File metadata (filename, extension, MIME type)
+**Salida:**
+- Captura de pantalla en base64
+- Datos binarios
+- Metadatos del archivo (nombre, extensión, tipo MIME)
 
-### 3. Get PDF from Website
+### 3. Obtener PDF del sitio web
 
-This operation allows you to navigate to a specified URL and generate a PDF version of the page.
+Esta operación permite navegar a una URL específica y generar una versión PDF de la página.
 
-**Options:**
-- Paper format (A4, Letter, etc.)
-- Orientation (portrait/landscape)
-- Background printing
-- Scale
-- Margins
-- Page ranges
+**Opciones:**
+- Formato de papel (A4, Letter, etc.)
+- Orientación (vertical/horizontal)
+- Impresión de fondo
+- Escala
+- Márgenes
+- Rangos de páginas
 
-**Output:**
-- PDF as base64
-- Binary data
-- File metadata (filename, extension, MIME type)
+**Salida:**
+- PDF en base64
+- Datos binarios
+- Metadatos del archivo (nombre, extensión, tipo MIME)
 
-## Configuration
+## Configuración
 
-All operations require the following common parameters:
+Todas las operaciones requieren los siguientes parámetros comunes:
 
-- **API Token:** Your CloudBrowser API token for authentication
-- **URL to Navigate:** The website URL to visit
-- **Navigation Options:**
-  - Wait until event (load, domcontentloaded, networkidle)
+- **Credenciales CloudBrowser API:** Tus credenciales de CloudBrowser API para autenticación
+- **URL para navegar:** La URL del sitio web a visitar
+- **Opciones de navegación:**
+  - Esperar hasta evento (load, domcontentloaded, networkidle)
   - Timeout
 
-Additional browser configuration options include:
-- Browser type (Chrome, Chromium)
-- Headless mode
-- Stealth mode
-- Session management
-- Proxy settings
+Opciones adicionales de configuración del navegador incluyen:
+- Tipo de navegador (Chrome, Chromium)
+- Modo headless
+- Modo stealth
+- Gestión de sesiones
+- Configuración de proxy
 
-## Example Usage
+## Ejemplo de uso
 
-### Capture a Website Screenshot and Save as File
+### Capturar una captura de pantalla de un sitio web y guardarla como archivo
 
-1. Add the CloudBrowser node
-2. Select "Get Screenshot from Website" operation
-3. Enter your API token
-4. Specify the URL (e.g., https://n8n.io)
-5. Configure screenshot options as needed
-6. Connect to a Write Binary File node to save the image
+1. Añade el nodo CloudBrowser
+2. Configura las credenciales de CloudBrowser API
+3. Selecciona la operación "Obtener captura de pantalla del sitio web"
+4. Especifica la URL (por ejemplo, https://n8n.io)
+5. Configura las opciones de captura según sea necesario
+6. Conecta a un nodo Write Binary File para guardar la imagen
 
-### Generate a PDF from a Website
+### Generar un PDF de un sitio web
 
-1. Add the CloudBrowser node
-2. Select "Get PDF from Website" operation
-3. Enter your API token
-4. Specify the URL (e.g., https://docs.n8n.io)
-5. Configure PDF options as needed
-6. Connect to a Write Binary File node to save the PDF
+1. Añade el nodo CloudBrowser
+2. Configura las credenciales de CloudBrowser API
+3. Selecciona la operación "Obtener PDF del sitio web"
+4. Especifica la URL (por ejemplo, https://docs.n8n.io)
+5. Configura las opciones de PDF según sea necesario
+6. Conecta a un nodo Write Binary File para guardar el PDF
 
-## API Requirements
+## Requisitos de API
 
-This node requires an API token from CloudBrowser.ai service. Please sign up at https://cloudbrowser.ai to obtain your API token.
+Este nodo requiere un token de API del servicio CloudBrowser.ai. Por favor, regístrate en https://cloudbrowser.ai para obtener tu token de API y configurarlo en la sección de credenciales.
 
-## License
+## Licencia
 
 [MIT](LICENSE.md)

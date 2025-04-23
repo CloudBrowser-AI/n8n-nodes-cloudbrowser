@@ -6,9 +6,9 @@ import {
 } from 'n8n-workflow';
 
 export class HttpBinApi implements ICredentialType {
-	name = 'httpbinApi';
+	name = 'httpBinApi';
 	displayName = 'HttpBin API';
-	documentationUrl = '<your-docs-url>';
+	documentationUrl = 'https://httpbin.org/docs';
 	properties: INodeProperties[] = [
 		{
 			displayName: 'Token',

@@ -1,4 +1,8 @@
-import { INodeType, INodeTypeDescription } from 'n8n-workflow';
+import {
+	INodeType,
+	INodeTypeDescription,
+	NodeConnectionType,
+} from 'n8n-workflow';
 import { httpVerbFields, httpVerbOperations } from './HttpVerbDescription';
 
 export class HttpBin implements INodeType {
@@ -6,19 +10,19 @@ export class HttpBin implements INodeType {
 		displayName: 'HttpBin',
 		name: 'httpBin',
 		icon: 'file:httpbin.svg',
-		group: ['transform'],
+		group: ['data'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
 		description: 'Consume HttpBin API',
 		defaults: {
 			name: 'HttpBin',
-			color: '#00FF00',
+
 		},
-		inputs: ['main'],
-		outputs: ['main'],
+		inputs: ['main'] as NodeConnectionType[],
+		outputs: ['main'] as NodeConnectionType[],
 		credentials: [
 			{
-				name: 'httpbinApi',
+				name: 'httpBinApi',
 				required: false,
 			},
 		],

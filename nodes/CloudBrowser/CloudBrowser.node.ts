@@ -7,6 +7,8 @@ import {
  INodeType,
  INodeTypeDescription,
  IHttpRequestMethods,
+ NodeConnectionType,
+ NodeOperationError,
 } from 'n8n-workflow';
 import * as puppeteer from 'puppeteer';
 
@@ -14,16 +16,22 @@ export class CloudBrowser implements INodeType {
  description: INodeTypeDescription = {
    displayName: 'CloudBrowser',
    name: 'cloudBrowser',
-   icon: 'file:cloudbrowserlogo.png',
+   icon: 'file:cloudbrowserlogo.svg',
    group: ['transform'],
    version: 1,
    description: 'Interact with websites using a cloud-based browser instance',
    defaults: {
      name: 'CloudBrowser',
-     color: '#772244',
+
    },
-   inputs: ['main'],
-   outputs: ['main'],
+   inputs: ['main'] as NodeConnectionType[],
+   outputs: ['main'] as NodeConnectionType[],
+   credentials: [
+     {
+       name: 'cloudBrowserApi',
+       required: true,
+     },
+   ],
    properties: [
      {
        displayName: 'Resource',
@@ -56,19 +64,19 @@ export class CloudBrowser implements INodeType {
        },
        options: [
          {
-           name: 'Get HTML from Website',
+           name: 'Get HTML From Website',
            value: 'getHtml',
            description: 'Navigate to URL and retrieve HTML content',
            action: 'Get HTML from website',
          },
          {
-           name: 'Get Screenshot from Website',
+           name: 'Get Screenshot From Website',
            value: 'getScreenshot',
            description: 'Navigate to URL and take a screenshot',
            action: 'Get screenshot from website',
          },
          {
-           name: 'Get PDF from Website',
+           name: 'Get PDF From Website',
            value: 'getPdf',
            description: 'Navigate to URL and generate a PDF',
            action: 'Get PDF from website',
@@ -115,28 +123,6 @@ export class CloudBrowser implements INodeType {
          },
        ],
        default: 'open',
-     },
-     {
-       displayName: 'API Token',
-       name: 'apiToken',
-       type: 'string',
-       default: '',
-       description: 'API token for authentication',
-       required: true,
-       displayOptions: {
-         show: {
-           resource: [
-             'content',
-             'navigation',
-           ],
-           operation: [
-             'getHtml', 
-             'getScreenshot', 
-             'getPdf',
-             'open'
-           ],
-         },
-       },
      },
      {
        displayName: 'WebSocket Address',
@@ -224,15 +210,15 @@ export class CloudBrowser implements INodeType {
            name: 'waitUntil',
            type: 'options',
            options: [
-             { name: 'load', value: 'load' },
-             { name: 'domcontentloaded', value: 'domcontentloaded' },
-             { name: 'networkidle0', value: 'networkidle0' },
-             { name: 'networkidle2', value: 'networkidle2' },
+             { name: 'Load', value: 'load' },
+             { name: 'Domcontentloaded', value: 'domcontentloaded' },
+             { name: 'Networkidle0', value: 'networkidle0' },
+             { name: 'Networkidle2', value: 'networkidle2' },
            ],
            default: 'load',
          },
          {
-           displayName: 'Timeout (ms)',
+           displayName: 'Timeout (Ms)',
            name: 'timeout',
            type: 'number',
            default: 30000,
@@ -285,7 +271,7 @@ export class CloudBrowser implements INodeType {
            default: true,
          },
          {
-           displayName: 'Keep Open (seconds)',
+           displayName: 'Keep Open (Seconds)',
            name: 'keepOpen',
            type: 'number',
            default: 300,
@@ -303,12 +289,14 @@ export class CloudBrowser implements INodeType {
            name: 'saveSession',
            type: 'boolean',
            default: false,
+           description: 'Whether to save the browser session for later reuse',
          },
          {
            displayName: 'Recover Session',
            name: 'recoverSession',
            type: 'boolean',
            default: false,
+           description: 'Whether to recover a previously saved browser session',
          },
        ],
      },
@@ -459,7 +447,7 @@ export class CloudBrowser implements INodeType {
            name: 'fullPage',
            type: 'boolean',
            default: true,
-           description: 'When true, takes a screenshot of the full scrollable page',
+           description: 'Whether to take a screenshot of the full scrollable page',
          },
          {
            displayName: 'Quality',
@@ -545,18 +533,18 @@ export class CloudBrowser implements INodeType {
            name: 'format',
            type: 'options',
            options: [
-             { name: 'Letter', value: 'Letter' },
-             { name: 'Legal', value: 'Legal' },
-             { name: 'Tabloid', value: 'Tabloid' },
-             { name: 'A0', value: 'A0' },
-             { name: 'A1', value: 'A1' },
-             { name: 'A2', value: 'A2' },
-             { name: 'A3', value: 'A3' },
-             { name: 'A4', value: 'A4' },
-             { name: 'A5', value: 'A5' },
-             { name: 'A6', value: 'A6' },
+             { name: 'A0', value: 'a0' },
+             { name: 'A1', value: 'a1' },
+             { name: 'A2', value: 'a2' },
+             { name: 'A3', value: 'a3' },
+             { name: 'A4', value: 'a4' },
+             { name: 'A5', value: 'a5' },
+             { name: 'A6', value: 'a6' },
+             { name: 'Legal', value: 'legal' },
+             { name: 'Letter', value: 'letter' },
+             { name: 'Tabloid', value: 'tabloid' },
            ],
-           default: 'A4',
+           default: 'a4',
            description: 'Paper format of the PDF',
          },
          {
@@ -592,28 +580,28 @@ export class CloudBrowser implements INodeType {
            default: {},
            options: [
              {
-               displayName: 'Top (mm)',
+               displayName: 'Top (Mm)',
                name: 'top',
                type: 'number',
                default: 0,
                description: 'Top margin in millimeters',
              },
              {
-               displayName: 'Right (mm)',
+               displayName: 'Right (Mm)',
                name: 'right',
                type: 'number',
                default: 0,
                description: 'Right margin in millimeters',
              },
              {
-               displayName: 'Bottom (mm)',
+               displayName: 'Bottom (Mm)',
                name: 'bottom',
                type: 'number',
                default: 0,
                description: 'Bottom margin in millimeters',
              },
              {
-               displayName: 'Left (mm)',
+               displayName: 'Left (Mm)',
                name: 'left',
                type: 'number',
                default: 0,
@@ -637,6 +625,10 @@ export class CloudBrowser implements INodeType {
    const items = this.getInputData();
    const returnData: IDataObject[] = [];
 
+   // Get credentials
+   const credentials = await this.getCredentials('cloudBrowserApi');
+   const apiToken = credentials.apiToken as string;
+
    for (let i = 0; i < items.length; i++) {
      const resource = this.getNodeParameter('resource', i) as string;
      const operation = this.getNodeParameter('operation', i) as string;
@@ -647,7 +639,6 @@ export class CloudBrowser implements INodeType {
        // Handle different operation types
        if (resource === 'navigation' && operation === 'open') {
          // Open operation - just open a browser and return the WebSocket address
-         const apiToken = this.getNodeParameter('apiToken', i) as string;
          const browserConfig = this.getNodeParameter('browserConfig', i, {}) as IDataObject;
          const argsCollection = this.getNodeParameter('args.argsValues', i, []) as IDataObject[];
          const ignoredArgsCollection = this.getNodeParameter('ignoredDefaultArgs.ignoredArgsValues', i, []) as IDataObject[];
@@ -681,7 +672,7 @@ export class CloudBrowser implements INodeType {
          const openResponse = await this.helpers.request!(openOptions);
          
          if (!openResponse.address) {
-           throw new Error('No WebSocket address received from the browser service');
+           throw new NodeOperationError(this.getNode(), 'No WebSocket address received from the browser service');
          }
          
          result = {
@@ -736,7 +727,7 @@ export class CloudBrowser implements INodeType {
          const page = pages[0]; // Get the first tab
          
          if (!page) {
-           throw new Error('No page found in the browser');
+           throw new NodeOperationError(this.getNode(), 'No page found in the browser');
          }
          
          // Wait for the selector to be available and click on it
@@ -774,7 +765,6 @@ export class CloudBrowser implements INodeType {
        }
        else if (resource === 'content') {
          // Handle content operations (getHtml, getScreenshot, getPdf)
-         const apiToken = this.getNodeParameter('apiToken', i) as string;
          const url = this.getNodeParameter('url', i) as string;
          const navigationOptions = this.getNodeParameter('navigationOptions', i, {}) as IDataObject;
          const browserConfig = this.getNodeParameter('browserConfig', i, {}) as IDataObject;
@@ -812,7 +802,7 @@ export class CloudBrowser implements INodeType {
          const openResponse = await this.helpers.request!(openOptions);
          
          if (!openResponse.address) {
-           throw new Error('No WebSocket address received from the browser service');
+           throw new NodeOperationError(this.getNode(), 'No WebSocket address received from the browser service');
          }
 
          // Connect to the browser using Puppeteer
@@ -884,7 +874,7 @@ export class CloudBrowser implements INodeType {
            const pdfOptions = this.getNodeParameter('pdfOptions', i, {}) as IDataObject;
            
            const options: puppeteer.PDFOptions = {
-             format: (pdfOptions.format as puppeteer.PaperFormat) || 'A4',
+             format: (pdfOptions.format as puppeteer.PaperFormat) || 'a4',
              landscape: pdfOptions.landscape as boolean,
              printBackground: pdfOptions.printBackground !== false,
              scale: pdfOptions.scale as number || 1,
@@ -923,7 +913,7 @@ export class CloudBrowser implements INodeType {
          await browser.disconnect();
        }
        else {
-         throw new Error(`The operation "${operation}" for resource "${resource}" is not supported`);
+         throw new NodeOperationError(this.getNode(), `The operation "${operation}" for resource "${resource}" is not supported`);
        }
 
        // Return results
