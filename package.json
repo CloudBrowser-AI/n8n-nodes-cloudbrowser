@@ -1,25 +1,27 @@
 {
   "name": "n8n-nodes-cloudbrowser",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "CloudBrowser node for n8n that allows users to interact with websites using Puppeteer - retrieve HTML, take screenshots, and generate PDFs",
   "keywords": [
     "n8n-community-node-package",
     "cloudbrowser",
     "browser",
+    "ai-agent",
+    "navigation",
     "puppeteer",
     "screenshot",
     "pdf",
     "html"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/CloudBrowser-AI/cloudbrowser-ai-front",
+  "homepage": "https://github.com/CloudBrowser-AI/n8n-nodes-cloudbrowser",
   "author": {
     "name": "Contact",
     "email": "contact@cloudbrowser.ai"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/CloudBrowser-AI/cloudbrowser-ai-front.git"
+    "url": "https://github.com/CloudBrowser-AI/n8n-nodes-cloudbrowser.git"
   },
   "engines": {
     "node": ">=18.10",
@@ -34,7 +36,11 @@
     "format": "prettier nodes credentials --write",
     "lint": "eslint nodes credentials package.json",
     "lintfix": "eslint nodes credentials package.json --fix",
-    "prepublishOnly": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes credentials package.json"
+    "prepublishOnly": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes credentials package.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint:node": "n8n-node-dev lint"
   },
   "files": [
     "dist"
@@ -42,12 +48,10 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/CloudBrowserApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
+      "dist/credentials/CloudBrowserApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/CloudBrowser/CloudBrowser.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
+      "dist/nodes/CloudBrowser/CloudBrowser.node.js"
     ]
   },
   "devDependencies": {
@@ -57,14 +61,14 @@
     "gulp": "^4.0.2",
     "n8n": "^1.88.0",
     "prettier": "^3.3.2",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vitest": "^3.1.2"
   },
   "peerDependencies": {
     "n8n-workflow": "^1.82.0"
   },
   "dependencies": {
     "n8n-core": "^1.14.1",
-    "puppeteer": "^24.6.1",
-    "sqlite3": "^5.1.7"
+    "puppeteer": "^24.6.1"
   }
 }

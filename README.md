@@ -102,6 +102,23 @@ Additional browser configuration options include:
 
 This node requires an API token from the CloudBrowser.ai service. Please register at https://cloudbrowser.ai to obtain your API token and configure it in the credentials section.
 
+## Testing
+
+This node is thoroughly tested to ensure reliability and functionality. To run tests:
+
+```bash
+# Install dependencies
+npm install
+
+# Run tests
+npm run test
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+For more information about testing, see the [test documentation](test/README.md).
+
 ## License
 
 [MIT](LICENSE.md)
